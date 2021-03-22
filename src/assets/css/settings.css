@@ -1,0 +1,28 @@
+:root {
+    --primary-color: #4361ee;
+    --text-color: black;
+    --white: white;
+    --primary-font: 'Roboto';
+    --secondary-font: sans-serif;
+    --wrapper: 192rem;
+    --container: 114rem;
+}
+
+html {
+    font-size: 62.5%;
+    font-family: var(--primary-font), var(--secondary-font);
+}
+
+.wrapper {
+    max-width: var(--wrapper);
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.container {
+    max-width: var(--container);
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+    margin-left: auto;
+    margin-right: auto;
+}
