@@ -12,7 +12,7 @@ const getCfs = () => {
         return { id: cfs.id, ...cfs.data() };
       });
 
-      if (!confessions) {
+      if (confessions.value.length === 0) {
         throw Error('Không có confession nào');
       }
     } catch (err) {

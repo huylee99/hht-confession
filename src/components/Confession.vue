@@ -1,10 +1,7 @@
 <template>
   <div class="item--top">
-    <h3 class="item--title">
-      {{ post.title }}
-    </h3>
     <div class="tool">
-      <i class="far fa-copy copy"></i>
+      <i class="far fa-copy copy" @click="toClipboard(post.body)"></i>
       <i class="far fa-trash-alt delete" @click="deleteHandler"></i>
     </div>
   </div>
@@ -17,18 +14,22 @@
 
 <script>
 import { deleteCfs } from '../composables/cfsHandler';
+import { ref } from 'vue';
+import { toClipboard } from '@soerenmartius/vue3-clipboard';
 
 export default {
   props: ['post'],
   emits: ['deletePost'],
   setup(props, context) {
+    const content = ref('');
     const deleteHandler = async () => {
       await deleteCfs(props.post.id);
-
       context.emit('deletePost', props.post.id);
     };
 
-    return { deleteHandler };
+    content.value = props.post.body;
+
+    return { deleteHandler, toClipboard };
   },
 };
 </script>
@@ -40,7 +41,7 @@ export default {
 
 .item--content {
   font-size: 1.6rem;
-  text-align: justify;
+
   white-space: pre-wrap;
   word-break: break-word;
 }

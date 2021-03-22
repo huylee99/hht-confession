@@ -11,7 +11,7 @@
           <label for="password">Mật khẩu</label>
           <input type="password" name="password" v-model="password" required />
         </div>
-        <span class="error" v-if="error.length">{{ error }}</span>
+        <Alert :error="error" v-if="error.length" />
         <button class="btn--submit">Đăng nhập</button>
       </form>
     </div>
@@ -20,10 +20,12 @@
 
 <script>
 import { userLogin } from '../composables/userHandler';
+import Alert from '../components/Alert';
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 
 export default {
+  components: { Alert },
   setup() {
     const username = ref('');
     const password = ref('');
@@ -47,7 +49,7 @@ export default {
 
 <style scoped>
 form {
-  max-width: 400px;
+  width: 400px;
   position: absolute;
   top: 40%;
   left: 50%;
@@ -101,6 +103,7 @@ form {
   font-size: 1.5rem;
   border-radius: 10px;
   cursor: pointer;
+  margin-top: 1rem;
 }
 
 .btn--submit:active,

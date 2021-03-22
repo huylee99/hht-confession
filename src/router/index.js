@@ -3,7 +3,7 @@ import { adminAuth } from '../firebase/config';
 import Home from '../views/Home.vue';
 import Admin from '../views/Admin.vue';
 import Login from '../views/Login.vue';
-
+import Success from '../views/Success.vue';
 // authentication
 
 const routes = [
@@ -20,6 +20,8 @@ const routes = [
       const isAuthenticated = adminAuth.currentUser;
       if (!isAuthenticated) next({ name: 'Login' });
       else next();
+
+      document.title = to.name;
     },
   },
   {
@@ -28,9 +30,19 @@ const routes = [
     component: Login,
     beforeEnter: (to, from, next) => {
       const isAuthenticated = adminAuth.currentUser;
-      if (isAuthenticated) next({ name: 'Admin' });
-      else next();
+      if (isAuthenticated) {
+        next({ name: 'Admin' });
+      } else {
+        next();
+      }
+
+      document.title = to.name;
     },
+  },
+  {
+    path: '/success',
+    name: 'Success',
+    component: Success,
   },
 ];
 

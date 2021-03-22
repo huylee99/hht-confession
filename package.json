@@ -7,9 +7,12 @@
     "build": "vue-cli-service build"
   },
   "dependencies": {
+    "@soerenmartius/vue3-clipboard": "^0.1.2",
     "core-js": "^3.6.5",
     "firebase": "^8.3.1",
+    "v-clipboard": "^2.2.3",
     "vue": "^3.0.0",
+    "vue-clipboard2": "^0.3.1",
     "vue-router": "^4.0.0-0"
   },
   "devDependencies": {

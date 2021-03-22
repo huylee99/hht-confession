@@ -11,15 +11,6 @@
               </div>
               <div class="form__body">
                 <div class="form-group">
-                  <label for="title">Tiêu đề</label>
-                  <input
-                    type="text"
-                    name="title"
-                    v-model="title"
-                    placeholder="Gửi cho ai?"
-                  />
-                </div>
-                <div class="form-group">
                   <label for="body">Nội dung</label>
                   <textarea
                     name="body"
@@ -27,7 +18,7 @@
                     placeholder="Nội dung là gì?"
                     required
                   ></textarea>
-                  <span class="check" v-if="error.length">{{ error }}</span>
+                  <Alert v-if="error.length" :error="error" />
                 </div>
                 <div class="form-submit">
                   <button class="btn--submit">Gửi</button>
@@ -48,14 +39,18 @@
 <script>
 // @ is an alias to /src
 import { sendCfs } from '../composables/cfsHandler';
+import Alert from '../components/Alert';
 import { ref } from 'vue';
+import { useRouter } from 'vue-router';
 
 export default {
   name: 'Home',
+  components: { Alert },
   setup() {
     const title = ref('');
     const body = ref('');
     const error = ref('');
+    const router = useRouter();
 
     const formValidation = () => {
       if (body.value.length < 50) {
@@ -70,13 +65,14 @@ export default {
       error.value = '';
 
       if (formValidation()) {
-        await sendCfs({ title: title.value, body: body.value });
+        await sendCfs({ body: body.value });
         title.value = '';
         body.value = '';
+        router.push({ name: 'Success' });
       }
     };
 
-    return { body, title, error, submitHandler };
+    return { body, error, submitHandler };
   },
 };
 </script>
@@ -152,6 +148,7 @@ export default {
 .form-group textarea {
   height: 200px;
   white-space: pre-wrap;
+  margin-bottom: 1rem;
 }
 
 .form-group input:focus,

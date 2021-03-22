@@ -4,14 +4,17 @@
       <Confession :post="post" @deletePost="deletePost" />
     </li>
   </ul>
+  <div v-else-if="error" class="error">{{ error }}</div>
+  <Spinner v-else />
 </template>
 
 <script>
 import Confession from '../components/Confession';
 import { getCfs } from '../composables/cfsHandler';
+import Spinner from '../components/Spinner';
 
 export default {
-  components: { Confession },
+  components: { Confession, Spinner },
 
   setup() {
     const { confessions, error, getData } = getCfs();
@@ -19,6 +22,10 @@ export default {
     getData();
     const deletePost = (id) => {
       confessions.value = confessions.value.filter((post) => post.id !== id);
+
+      if (confessions.value.length === 0) {
+        error.value = 'Hiện tại không có confession nào';
+      }
     };
 
     return { deletePost, confessions, error };
@@ -40,5 +47,10 @@ export default {
 
 .cfs__item:not(:last-of-type) {
   border-bottom: 1px solid gray;
+}
+
+.error {
+  text-align: center;
+  font-size: 2rem;
 }
 </style>
